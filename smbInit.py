@@ -55,7 +55,7 @@ with open(os.path.join("/root", "users.conf"), "a") as f:
 		valid users = {admin_name}, {item['user']}
 		security mask = 0770
 		directory security mask = 0770
-		\n
+		
 		"""
 		f.write(conf)
         
@@ -73,10 +73,10 @@ if (conf_net != "n" and conf_net != "N" and conf_net != "no" and conf_net != "No
 	while True:
 		conf_subnet = str(input("Please enter your subnet and network mask in prefix notation (example: 0.0.0.0/0): "))
 		if validate_subnet(conf_subnet):
-			subprocess.run("The subnet is entered correctly", shell=True)
+			print("The subnet is entered correctly")
 			break
 		else:
-			subprocess.run("echo The subnet is entered incorrectly, please try again", shell=True)
+			print("The subnet is entered incorrectly, please try again")
 	
 	for ports in LIST_PORT:
 		subprocess.run(f"iptables -A INPUT -p {ports['protocol']} -m {ports['protocol']} --dport {ports['port']} -s {conf_subnet} -j ACCEPT", shell=True)
