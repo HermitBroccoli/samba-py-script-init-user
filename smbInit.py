@@ -3,6 +3,8 @@ from time import sleep
 import os
 import ipaddress
 
+subprocess.run("apt install samba samba-common", shell=True)
+
 def validate_subnet(subnet):
     try:
         ipaddress.ip_network(subnet, strict=True)
