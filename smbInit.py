@@ -2,6 +2,7 @@ import subprocess
 from time import sleep
 import os
 import ipaddress
+import getpass
 
 subprocess.run("apt install samba samba-common", shell=True)
 
@@ -16,7 +17,7 @@ CONF_DIR = "/etc/samba"
 CONF_FILE = "smb.conf"
 
 admin_name = str(input("Enter admin username: "))
-admin_pass = str(input("Enter admin password: "))
+admin_pass = getpass.getpass("Enter admin password: ")
 subprocess.run(f'(echo "{admin_pass}"; echo "{admin_pass}") | smbpasswd -a -s {admin_name}', shell=True)
 
 LIST_PORT = [
