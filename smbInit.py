@@ -9,6 +9,10 @@ with open("./config.json", "r") as user:
 	CONF = json.loads(user.read())
 
 LIST_USERPASWWORD = CONF["users"]
+LIST_PORT = CONF['ports'] 
+CONF_DIR = CONF["config_dir"]
+CONF_FILE = CONF["config_file"]
+ADMIN_NAME = CONF["admin_user"]
 
 subprocess.run("apt install samba samba-common", shell=True)
 
@@ -18,20 +22,14 @@ def validate_subnet(subnet):
         return True
     except ValueError:
         return False
-
-CONF_DIR = CONF["config_dir"]
-CONF_FILE = CONF["config_file"]
-
-admin_name = CONF["admin_user"]
+    
 admin_pass = getpass.getpass("Enter admin password: ")
-subprocess.run(f'(echo "{admin_pass}"; echo "{admin_pass}") | smbpasswd -a -s {admin_name}', shell=True)
-
-LIST_PORT = CONF['ports'] 
+subprocess.run(f'(echo "{admin_pass}"; echo "{admin_pass}") | smbpasswd -a -s {ADMIN_NAME}', shell=True)
 
 with open(os.path.join(CONF_DIR, CONF_FILE), "a") as mm:
-	mm.write(f"\ninclude = /home/{admin_name}/users.conf")
+	mm.write(f"\ninclude = /home/{ADMIN_NAME}/users.conf")
 
-with open(os.path.join(f"/home/{admin_name}", "users.conf"), "a") as f:
+with open(os.path.join(f"/home/{ADMIN_NAME}", "users.conf"), "a") as f:
 	for item in LIST_USERPASWWORD["users"]:
 		conf = f"""
 [{item['user']}]
@@ -43,7 +41,7 @@ read only = no
 create mask = 0770
 directory mask = 0770
 writable = yes
-valid users = {admin_name}, {item['user']}
+valid users = {ADMIN_NAME}, {item['user']}
 security mask = 0770
 directory security mask = 0770
 		"""
@@ -52,7 +50,7 @@ directory security mask = 0770
 for item in LIST_USERPASWWORD["users"]:
 	sleep(0.5)
 	subprocess.run(f"mkdir -p /home/{item['user']}", shell=True)
-	subprocess.run(f"chown {item['user']}:{admin_name} /home/{item['user']}", shell=True)
+	subprocess.run(f"chown {item['user']}:{ADMIN_NAME} /home/{item['user']}", shell=True)
 	subprocess.run(f"chmod 770 /home/{item['user']}", shell=True)
 	subprocess.run(f"useradd {item['user']}", shell=True)
 	subprocess.run(f"(echo {item['user']}:{item['password']}) | chpasswd", shell=True)
