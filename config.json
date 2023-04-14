@@ -1,0 +1,45 @@
+{
+	"users": [
+		{
+			"user": "user1",
+			"password": "password1"
+		},
+		{
+			"user": "user2",
+			"password": "password2"
+		},
+		{
+			"user": "user3",
+			"password": "password3"
+		},
+		{
+            "user": "user4",
+            "password": "password4"
+        },
+		{
+			"user": "user5",
+            "password": "password5"
+		}
+	],
+	"config_dir": "/etc/samba",
+	"config_file": "samba.conf",
+	"admin_user": "admin",
+	"ports": [
+		{
+			"port": 445,
+			"protocol": "tcp"
+		},
+		{
+			"port": 139,
+			"protocol": "tcp"
+		},
+		{
+			"port": 138,
+			"protocol": "udp"
+		},
+		{
+			"port": 137,
+			"protocol": "udp"
+		}
+	]
+}

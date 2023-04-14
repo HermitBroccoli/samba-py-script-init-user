@@ -3,6 +3,12 @@ from time import sleep
 import os
 import ipaddress
 import getpass
+import json
+
+with open("./config.json", "r") as user:
+	CONF = json.loads(user.read())
+
+LIST_USERPASWWORD = CONF["users"]
 
 subprocess.run("apt install samba samba-common", shell=True)
 
@@ -13,56 +19,37 @@ def validate_subnet(subnet):
     except ValueError:
         return False
 
-CONF_DIR = "/etc/samba"
-CONF_FILE = "smb.conf"
+CONF_DIR = CONF["config_dir"]
+CONF_FILE = CONF["config_file"]
 
-admin_name = str(input("Enter admin username: "))
+admin_name = CONF["admin_user"]
 admin_pass = getpass.getpass("Enter admin password: ")
 subprocess.run(f'(echo "{admin_pass}"; echo "{admin_pass}") | smbpasswd -a -s {admin_name}', shell=True)
 
-LIST_PORT = [
-	{"port": 445, "protocol": "tcp"},
-	{"port": 139, "protocol": "tcp"},
-	{"port": 138, "protocol": "udp"},
-	{"port": 137, "protocol": "udp"},
-]
-
-LIST_USERPASWWORD = [
-	{"user": 'student1', "password": 'student1'},
-	{"user": 'student2', "password": 'student2'},
-	{"user": 'student3', "password": 'student3'},
-	{"user": 'student4', "password": 'student4'},
-	{"user": 'student5', "password": 'student5'},
-	{"user": 'student6', "password": 'student6'},
-	{"user": 'student7', "password": 'student7'},
-	{"user": 'student8', "password": 'student8'},
-	{"user": 'student9', "password": 'student9'},
-	{"user": 'student10', "password": 'student10'},
-] 
+LIST_PORT = CONF['ports'] 
 
 with open(os.path.join(CONF_DIR, CONF_FILE), "a") as mm:
-	mm.write(f"\ninclude = /root/users.conf")
+	mm.write(f"\ninclude = /home/{admin_name}/users.conf")
 
-with open(os.path.join("/root", "users.conf"), "a") as f:
-	for item in LIST_USERPASWWORD:
+with open(os.path.join(f"/home/{admin_name}", "users.conf"), "a") as f:
+	for item in LIST_USERPASWWORD["users"]:
 		conf = f"""
-		[{item['user']}]
-		comment = {item['user']}
-		path = /home/{item['user']}
-		browsable = yes
-		guest ok = no
-		read only = no
-		create mask = 0770
-		directory mask = 0770
-		writable = yes
-		valid users = {admin_name}, {item['user']}
-		security mask = 0770
-		directory security mask = 0770
-		
+[{item['user']}]
+comment = {item['user']}
+path = /home/{item['user']}
+browsable = yes
+guest ok = no
+read only = no
+create mask = 0770
+directory mask = 0770
+writable = yes
+valid users = {admin_name}, {item['user']}
+security mask = 0770
+directory security mask = 0770
 		"""
 		f.write(conf)
         
-for item in LIST_USERPASWWORD:
+for item in LIST_USERPASWWORD["users"]:
 	sleep(0.5)
 	subprocess.run(f"mkdir -p /home/{item['user']}", shell=True)
 	subprocess.run(f"chown {item['user']}:{admin_name} /home/{item['user']}", shell=True)
