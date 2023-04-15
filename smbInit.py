@@ -87,7 +87,5 @@ try:
 		subprocess.run("service smbd restart", shell=True)
 	else:
 		print("Please check your configuration file")
-except Exception:
-	error()
 except KeyboardInterrupt:
 	error()
