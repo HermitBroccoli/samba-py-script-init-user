@@ -42,25 +42,25 @@ try:
 		with open(os.path.join(CONF_DIR, CONF_FILE), "a") as mm:
 			mm.write(f"\ninclude = /home/{ADMIN_NAME}/users.conf")
 
-		with open(os.path.join(f"/home/{ADMIN_NAME}", "users.conf"), "a") as f:
-			for item in LIST_USERPASWWORD["users"]:
+		with open(os.path.join(f"./{ADMIN_NAME}", "users.conf"), "a") as f:
+			for item in LIST_USERPASWWORD:
 				conf = f"""
-		[{item['user']}]
-		comment = {item['user']}
-		path = /home/{item['user']}
-		browsable = yes
-		guest ok = no
-		read only = no
-		create mask = 0770
-		directory mask = 0770
-		writable = yes
-		valid users = {ADMIN_NAME}, {item['user']}
-		security mask = 0770
-		directory security mask = 0770
+				[{item['user']}]
+				comment = {item['user']}
+				path = /home/{item['user']}
+				browsable = yes
+				guest ok = no
+				read only = no
+				create mask = 0770
+				directory mask = 0770
+				writable = yes
+				valid users = {ADMIN_NAME}, {item['user']}
+				security mask = 0770
+				directory security mask = 0770
 				"""
 				f.write(conf)
 				
-		for item in LIST_USERPASWWORD["users"]:
+		for item in LIST_USERPASWWORD:
 			sleep(0.5)
 			subprocess.run(f"mkdir -p /home/{item['user']}", shell=True)
 			subprocess.run(f"chown {item['user']}:{ADMIN_NAME} /home/{item['user']}", shell=True)
