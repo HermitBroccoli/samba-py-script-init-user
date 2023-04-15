@@ -4,9 +4,10 @@ import os
 import ipaddress
 import getpass
 import json
+import platform
 
 def error(message = "Exit with error"):
-	subprocess.run("cls", shell=True)
+	platformOS()
 	print(f"Error: {message}")
 
 def validate_subnet(subnet):
@@ -15,6 +16,12 @@ def validate_subnet(subnet):
 		return True
 	except ValueError:
 		return False
+	
+def platformOS():
+	if platform.system() == 'Windows':
+		subprocess.run("cls", shell=True)
+	else:
+		subprocess.run("clear", shell=True)
 
 try:
 	with open("./config.json", "r") as user:
