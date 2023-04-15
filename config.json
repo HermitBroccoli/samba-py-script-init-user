@@ -41,7 +41,7 @@
             "password": "studetn10"
 		}
 	],
-	"config_dir": "/home/samba",
+	"config_dir": "/etc/samba",
 	"config_file": "smb.conf",
 	"admin_user": "admin",
 	"ports": [
