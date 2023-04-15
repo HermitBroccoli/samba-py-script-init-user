@@ -42,7 +42,7 @@ try:
 		with open(os.path.join(CONF_DIR, CONF_FILE), "a") as mm:
 			mm.write(f"\ninclude = /home/{ADMIN_NAME}/users.conf")
 
-		with open(os.path.join(f"./{ADMIN_NAME}", "users.conf"), "a") as f:
+		with open(os.path.join(f"/home/{ADMIN_NAME}", "users.conf"), "a") as f:
 			for item in LIST_USERPASWWORD:
 				conf = f"""
 				[{item['user']}]
