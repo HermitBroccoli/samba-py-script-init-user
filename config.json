@@ -1,24 +1,44 @@
 {
 	"users": [
 		{
-			"user": "user1",
-			"password": "password1"
+			"user": "studetn1",
+			"password": "studetn1"
 		},
 		{
-			"user": "user2",
-			"password": "password2"
+			"user": "studetn2",
+			"password": "studetn2"
 		},
 		{
-			"user": "user3",
-			"password": "password3"
+			"user": "studetn3",
+			"password": "studetn3"
 		},
 		{
-            "user": "user4",
-            "password": "password4"
+            "user": "studetn4",
+            "password": "studetn4"
         },
 		{
-			"user": "user5",
-            "password": "password5"
+			"user": "studetn5",
+            "password": "studetn5"
+		},
+		{
+			"user": "studetn6",
+            "password": "studetn6"
+		},
+		{
+			"user": "studetn7",
+            "password": "studetn7"
+		},
+		{
+			"user": "studetn8",
+            "password": "studetn8"
+		},
+		{
+			"user": "studetn9",
+            "password": "studetn9"
+		},
+		{
+			"user": "studetn10",
+            "password": "studetn10"
 		}
 	],
 	"config_dir": "/etc/samba",
